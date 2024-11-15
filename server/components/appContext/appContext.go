@@ -12,6 +12,7 @@ import (
 // AppContext có các thành phần như client MongoDB và logger
 type AppContext struct {
 	DBClient *mongo.Client
+	DB *mongo.Database
 	Logger   *log.Logger
 }
 
@@ -26,8 +27,11 @@ func InitAppContext(uri string) *AppContext {
 			log.Fatalf("Failed to connect to MongoDB: %v", err)
 		}
 
+		db := client.Database("database")
+
 		appCtx = &AppContext{
 			DBClient: client,
+			DB: db,
 			Logger:   log.Default(),
 		}
 	})
