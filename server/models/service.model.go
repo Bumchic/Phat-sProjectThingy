@@ -1,24 +1,32 @@
 package models
 
 import (
-	"time"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
 )
 
-type Service struct {
+const EntityName = "services"
+
+func (DBService) CollectionName() string {
+	return EntityName
+}
+
+type DBService struct {
 	ServiceId   primitive.ObjectID `bson:"_id"`
 	ServiceName string             `bson:"service_name"`
-	Price       float32            `bson:"price"`
+	Price       float64            `bson:"price"`
 	CreatedAt   time.Time          `bson:"created_at"`
 }
 
-type AddUserService struct {
-	ServiceName string `bson:"service_name"`
-	Username    string `bson:"username"`
+type CreateService struct {
+	ServiceId   primitive.ObjectID `bson:"_id"`
+	ServiceName string             `bson:"service_name" json:"service_name"`
+	Price       float64            `bson:"price" json:"price"`
+	CreatedAt   time.Time          `bson:"created_at"`
 }
 
-type DeleteUserService struct{
-	Username string `bson:"username"`
-	Service Service
+type UpdateService struct {
+	ServiceId   primitive.ObjectID `bson:"_id" json:"_id"`
+	ServiceName string             `bson:"service_name" json:"service_name"`
+	Price       float64            `bson:"price" json:"price"`
 }
